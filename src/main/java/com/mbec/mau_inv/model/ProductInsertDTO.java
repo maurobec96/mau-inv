@@ -14,12 +14,22 @@ public class ProductInsertDTO extends ProductDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private BigDecimal cost;
 
+    private Long amountRecieved;
+
     public BigDecimal getCost() {
         return cost;
     }
 
     public void setCost(final BigDecimal cost) {
         this.cost = cost;
+    }
+
+    public Long getAmountRecieved() {
+        return amountRecieved;
+    }
+
+    public void setAmountRecieved(Long amountRecieved) {
+        this.amountRecieved = amountRecieved;
     }
 
 }

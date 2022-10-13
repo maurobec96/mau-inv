@@ -1,14 +1,17 @@
 package com.mbec.mau_inv.service;
 
-import com.mbec.mau_inv.domain.Product;
-import com.mbec.mau_inv.model.ProductInsertDTO;
-import com.mbec.mau_inv.repos.ProductRepository;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.mbec.mau_inv.domain.Product;
+import com.mbec.mau_inv.model.ProductGetDTO;
+import com.mbec.mau_inv.model.ProductInsertDTO;
+import com.mbec.mau_inv.repos.ProductRepository;
 
 
 @Service
@@ -20,16 +23,16 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<ProductInsertDTO> findAll() {
+    public List<ProductGetDTO> findAll() {
         return productRepository.findAll(Sort.by("id"))
                 .stream()
-                .map(product -> mapToDTO(product, new ProductInsertDTO()))
+                .map(product -> mapToDTO(product, new ProductGetDTO()))
                 .collect(Collectors.toList());
     }
 
-    public ProductInsertDTO get(final Long id) {
+    public ProductGetDTO get(final Long id) {
         return productRepository.findById(id)
-                .map(product -> mapToDTO(product, new ProductInsertDTO()))
+                .map(product -> mapToDTO(product, new ProductGetDTO()))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
@@ -50,12 +53,13 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    private ProductInsertDTO mapToDTO(final Product product, final ProductInsertDTO productDTO) {
+    private ProductGetDTO mapToDTO(final Product product, final ProductGetDTO productDTO) {
         productDTO.setId(product.getId());
         productDTO.setProductName(product.getProductName());
         productDTO.setProductDescription(product.getProductDescription());
-        productDTO.setCost(product.getCost());
         productDTO.setListPrice(product.getListPrice());
+        productDTO.setExistingAmount(product.getStock());
+
         return productDTO;
     }
 
@@ -64,7 +68,16 @@ public class ProductService {
         product.setProductDescription(productDTO.getProductDescription());
         product.setCost(productDTO.getCost());
         product.setListPrice(productDTO.getListPrice());
+
+        if (product.getId() == null) {
+            product.setStock(productDTO.getAmountRecieved());
+        } else {
+            product.addStock(productDTO.getAmountRecieved());
+        }
+
         return product;
     }
 
+
 }
+

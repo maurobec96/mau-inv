@@ -1,9 +1,9 @@
 package com.mbec.mau_inv.rest;
 
-import com.mbec.mau_inv.model.ProductInsertDTO;
-import com.mbec.mau_inv.service.ProductService;
 import java.util.List;
+
 import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.mbec.mau_inv.model.ProductGetDTO;
+import com.mbec.mau_inv.model.ProductInsertDTO;
+import com.mbec.mau_inv.service.ProductService;
 
 
 @RestController
@@ -28,12 +32,12 @@ public class ProductResource {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductInsertDTO>> getAllProducts() {
+    public ResponseEntity<List<ProductGetDTO>> getAllProducts() {
         return ResponseEntity.ok(productService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductInsertDTO> getProduct(@PathVariable final Long id) {
+    public ResponseEntity<ProductGetDTO> getProduct(@PathVariable final Long id) {
         return ResponseEntity.ok(productService.get(id));
     }
 

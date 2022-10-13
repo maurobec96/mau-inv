@@ -46,8 +46,11 @@ public class Product {
     @Column(precision = 10, scale = 2)
     private BigDecimal listPrice;
 
-    @OneToMany(mappedBy = "product")
-    private Set<Inventory> productInventorys;
+    @Column
+    private Long stock;
+
+//    @OneToMany(mappedBy = "product")
+//    private Set<Inventory> productInventorys;
 
     @OneToMany(mappedBy = "product")
     private Set<InvoiceProduct> productInvoiceProducts;
@@ -59,6 +62,7 @@ public class Product {
     @LastModifiedDate
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
+
 
     public Long getId() {
         return id;
@@ -100,13 +104,18 @@ public class Product {
         this.listPrice = listPrice;
     }
 
-    public Set<Inventory> getProductInventorys() {
-        return productInventorys;
-    }
-
-    public void setProductInventorys(final Set<Inventory> productInventorys) {
-        this.productInventorys = productInventorys;
-    }
+//    public Set<Inventory> getProductInventorys() {
+//        return productInventorys;
+//    }
+//
+//    public void setProductInventorys(final Set<Inventory> productInventorys) {
+//        this.productInventorys = productInventorys;
+//    }
+//
+//    public void addProductInventory(final Inventory productInventory) {
+//        productInventory.setProduct(this);
+//        this.productInventorys.add(productInventory);
+//    }
 
     public Set<InvoiceProduct> getProductInvoiceProducts() {
         return productInvoiceProducts;
@@ -114,6 +123,22 @@ public class Product {
 
     public void setProductInvoiceProducts(final Set<InvoiceProduct> productInvoiceProducts) {
         this.productInvoiceProducts = productInvoiceProducts;
+    }
+
+    public Long getStock() {
+        return stock;
+    }
+
+    public void setStock(Long stock) {
+        this.stock = stock;
+    }
+
+    public void substractStock(Long amountPurchased) {
+        this.stock -= amountPurchased;
+    }
+
+    public void addStock(Long amountPurchased) {
+        this.stock += amountPurchased;
     }
 
     public OffsetDateTime getDateCreated() {
