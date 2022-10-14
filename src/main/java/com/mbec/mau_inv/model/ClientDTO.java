@@ -10,6 +10,10 @@ public class ClientDTO {
 
     @NotNull
     @Size(max = 255)
+    private String personalId;
+
+    @NotNull
+    @Size(max = 255)
     private String clientName;
 
     @Size(max = 255)
@@ -27,6 +31,14 @@ public class ClientDTO {
 
     public void setId(final Long id) {
         this.id = id;
+    }
+
+    public String getPersonalId() {
+        return personalId;
+    }
+
+    public void setPersonalId(final String personalId) {
+        this.personalId = personalId;
     }
 
     public String getClientName() {

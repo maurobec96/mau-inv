@@ -101,13 +101,12 @@ public class InvoiceService {
                     -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Product not found"));
 
             product.substractStock(invoiceProductDTO.getAmountPurchased());
+            product = productRepository.save(product);
 
             InvoiceProduct invPro = new InvoiceProduct();
             invPro.setProduct(product);
             invPro.setAmountPurchased(invoiceProductDTO.getAmountPurchased());
             invoice.addInvoiceInvoiceProducts(invPro);
-
-
 
         });
 

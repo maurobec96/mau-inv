@@ -33,6 +33,9 @@ public class Client {
     )
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String personalId;
+
     @Column(nullable = false)
     private String clientName;
 
@@ -62,6 +65,14 @@ public class Client {
 
     public void setId(final Long id) {
         this.id = id;
+    }
+
+    public String getPersonalId() {
+        return personalId;
+    }
+
+    public void setPersonalId(final String personalId) {
+        this.personalId = personalId;
     }
 
     public String getClientName() {
